@@ -11,12 +11,13 @@ public class Main {
 		TaskController tc = new TaskController ( );
 		String os = tc.os ( );
 		
-		String options[] = { "Matar por PID", "Matar por nome" };
-		int option;
-		
-		tc.callProcess( "tasklist" , true);
-		
-		while ( true ) {
+		String options[] = { "Matar por PID", "Matar por nome", "Fechar"};
+        int option;
+        if ( os.contains ( "linux" )) tc.callProcess ( "ps -ef" , true );
+        else if ( os.contains ( "windows" )) tc.callProcess ( "tasklist" , true );
+        else return; //os não suportado
+
+        while ( true ) {
 			
 			option = JOptionPane.showOptionDialog (
 					null,
