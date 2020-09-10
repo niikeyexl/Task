@@ -53,26 +53,28 @@ public class TaskController {
 			leitor.close ( );
 			buffer.close ( );
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	
-	public void killProcess ( String name ) {
+	public void killProcess ( String SO_name, String name ) {
 		
 		StringBuffer sb = new StringBuffer ( );
-		sb.append ( "TASKKILL /IM " );
+		if ( SO_name.contains ( "windows" )) sb.append ( "TASKKILL /IM " );
+		else if ( SO_name.contains ( "linux" )) sb.append ( "killall " );
+		else return; // error not supported so
+		
 		sb.append ( name );
 		
 		callProcess ( sb.toString ( ), false);
 	}
 	
-	public void killProcess ( Integer pid ) {
+	public void killProcess ( String SO_name, Integer pid ) {
 		
 		StringBuffer sb = new StringBuffer ( );
 		
-		
-		sb.append ( "TASKKILL /PID " );
+		if ( SO_name.contains ( "windows" )) sb.append ( "TASKKILL /IM " );
+		else if ( SO_name.contains ( "linux" )) sb.append ( "kill " );
 		sb.append ( pid );
 		
 		callProcess ( sb.toString ( ), false);
